@@ -7,7 +7,11 @@
       <imported>true</imported>
       <remarks>$PROJECT_DIR$/BSUIR_Python_Lab_003/settings.py</remarks>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+<<<<<<< HEAD
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/search_db.sqlite3</jdbc-url>
+=======
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
+>>>>>>> fdf95ebcf4aac20f73ab8553de934d637cea4802
       <explain-plan-config>
         <provider>com.intellij.database.plan.ExplainPlanProvider.NullExplainPlanProvider</provider>
       </explain-plan-config>
