@@ -26,6 +26,7 @@ class HtmlParser(object):
             s.decompose()
         self.text = ' '.join(self.soup.getText().split())
 
+
 h = HtmlParser('http://pi-code.blogspot.com.by/2008/12/2.html')
 h.geturllist()
 h.gettext()

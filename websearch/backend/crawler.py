@@ -53,7 +53,6 @@ class Crawler(object):
 
         return self.opener.open(url)
 
-
 """cr = Crawler()
 try:
     resp = cr.open('http://pi-code.blogspot.com.by/2008/12/2.html')
