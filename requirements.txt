@@ -1,4 +1,5 @@
 Django==1.10a1
 django-jinja==2.1.3
 Jinja2==2.8
+BeautifulSoup
 MarkupSafe==0.23
