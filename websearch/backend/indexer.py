@@ -2,8 +2,8 @@ import re
 
 
 def words_positions(text):
-    text = text.lower()
-    words = re.findall(r'\b[\w]+\b', text)
+    text = re.sub('[\W_]', ' ', text.lower())
+    words = filter(None, text.split())
     word_pos = {}
     for index, word in enumerate(words):
         if word in word_pos:
@@ -28,4 +28,4 @@ def build_index(files):
 
 
 def one_word_query(word):
-    word = re
+    pass
