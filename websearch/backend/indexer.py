@@ -3,11 +3,13 @@ import re
 
 def words_positions(text):
     text = text.lower()
-    words = set(re.findall(r'\b[w]+\b'))
+    words = re.findall(r'\b[w]+\b', text)
     word_pos = {}
-    for word in words:
-        word_pos[word] = [m.start() for m
-                          in re.finditer(r'\b%s\b' % word, text)]
+    for index, word in enumerate(words):
+        if word in word_pos:
+            word_pos[word].append(index)
+        else:
+            word_pos[word] = [index]
     return word_pos
 
 
