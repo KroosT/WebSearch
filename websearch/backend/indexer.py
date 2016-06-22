@@ -2,7 +2,8 @@ import re
 
 
 def words_positions(text):
-    words = set(re.sub('[\W_]+', ' ', text.lower()).split())
+    text = text.lower()
+    words = set(re.sub('[\W_]+', ' ', text).split())
     word_pos = {}
     for word in words:
         word_pos[word] = [m.start() for m
