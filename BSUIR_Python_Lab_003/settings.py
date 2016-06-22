@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
-
+    'django.contrib.staticfiles',
+    'websearch'
 ]
 
 MIDDLEWARE = [
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'BSUIR_Python_Lab_003.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'search_db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'websearch_db.sqlite3'),
     }
 }
 
