@@ -50,36 +50,4 @@ class Crawler():
         self.opener.addheaders = opener_headers
 
     def open(self, url):
-
         return self.opener.open(url)
-
-"""cr = Crawler()
-try:
-    resp = cr.open('http://pi-code.blogspot.com.by/2008/12/2.html')
-except RuntimeError, e:
-    sys.stderr.write('Error: %s\n' % e)
-    sys.exit(4)
-except urllib2.HTTPError, e:
-    sys.stderr.write('Error: %s\n' % e)
-    sys.stderr.write('Server error document:\n')
-    sys.stderr.write(e.read())
-    sys.exit(2)
-except urllib2.URLError, e:
-    sys.stderr.write('Error: %s\n' % e)
-    sys.exit(3)
-
-bytes_read = long()
-page = ""
-while True:
-    try:
-        data = resp.read(1024)
-        page += data
-    except socket.error, e:
-        sys.stderr.write('Error reading data: %s' % e)
-        sys.exit(5)
-
-    if not len(data):
-        break
-    bytes_read += len(data)
-
-sys.stdout.write(page)"""
