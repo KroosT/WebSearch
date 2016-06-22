@@ -2,8 +2,9 @@ import re
 
 
 class Indexer:
-   def __init__(self, files):
-       self.files = files
+
+    def __init__(self, files):
+        self.files = files
 
 
 def words_positions(text):

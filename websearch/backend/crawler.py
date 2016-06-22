@@ -33,7 +33,7 @@ class CheckRobotsPermission(urllib2.HTTPHandler):
         return urllib2.HTTPHandler.http_open(self, req)
 
 
-class Crawler(object):
+class Crawler():
 
     def __init__(self, crawlername=DEFAULT_CRAWLER_NAME, new_headers={},
                  email=DEFAULT_EMAIL):
