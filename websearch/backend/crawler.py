@@ -54,7 +54,7 @@ class Crawler(object):
         return self.opener.open(url)
 
 
-cr = Crawler()
+"""cr = Crawler()
 try:
     resp = cr.open('http://pi-code.blogspot.com.by/2008/12/2.html')
 except RuntimeError, e:
@@ -83,4 +83,4 @@ while True:
         break
     bytes_read += len(data)
 
-sys.stdout.write(page)
+sys.stdout.write(page)"""
