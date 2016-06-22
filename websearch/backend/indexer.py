@@ -1,8 +1,13 @@
 import re
 
 
+class Indexer:
+   def __init__(self, files):
+       self.files = files
+
+
 def words_positions(text):
-    text = re.sub('[\W_]', ' ', text.lower())
+    words = re.findall(ur'[\w]', unicode(text).lower(), flags=re.UNICODE)
     words = filter(None, text.split())
     word_pos = {}
     for index, word in enumerate(words):
