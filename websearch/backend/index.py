@@ -30,7 +30,7 @@ class Indexer:
             ) ** 0.5
             tf[filename] = {}
             for word in self.words_in_files[filename].keys():
-                self.tf[filename][word] = (
+                tf[filename][word] = (
                     len(self.words_in_files[filename][word]) / euclidean_norm)
         return tf
 
