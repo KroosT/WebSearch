@@ -1,29 +1,15 @@
-import collections
 import math
 import re
 
 
 class Indexer:
 
-    def __init__(self, words_in_file):
-        self.words_in_files = words_in_file
+    def __init__(self, words_in_files):
+        self.words_in_files = words_in_files
         self.index = {}
         self.build_index()
-        self.tf = {}
-        self.compute_tf()
-        self.idf = {}
-        self.compute_idf()
-
-    @staticmethod
-    def _words_positions(text):
-        words = re.findall(ur'\w+', unicode(text).lower(), flags=re.UNICODE)
-        word_pos = {}
-        for index, word in enumerate(words):
-            if word in word_pos:
-                word_pos[word].append(index)
-            else:
-                word_pos[word] = [index]
-        return word_pos
+        self.tf_idf = {}
+        self.compute_tf_idf()
 
     def build_index(self):
         for filename in self.words_in_files.keys():
@@ -36,20 +22,35 @@ class Indexer:
                         {filename: self.words_in_files[filename][word]})
 
     def compute_tf(self):
+        tf = {}
         for filename in self.words_in_files.keys():
             euclidean_norm = sum(
                 [len(self.words_in_files[filename][word]) ** 2 for word
                  in self.words_in_files[filename].keys()]
             ) ** 0.5
-            self.tf[filename] = {}
+            tf[filename] = {}
             for word in self.words_in_files[filename].keys():
                 self.tf[filename][word] = (
                     len(self.words_in_files[filename][word]) / euclidean_norm)
+        return tf
 
     def compute_idf(self):
+        idf = {}
         n = len(self.words_in_files)
         for word in self.index:
-            self.idf[word] = math.log(n / len(self.index[word]))
+            idf[word] = math.log(n / len(self.index[word]))
+        return idf
+
+    def compute_tf_idf(self):
+        tf = self.compute_tf()
+        idf = self.compute_idf()
+        for filename in self.words_in_files:
+            self.tf_idf[filename] = {}
+            for word in self.index:
+                if word in self.words_in_files[filename].keys():
+                    self.tf_idf[filename][word] = idf[word] * tf[filename][word]
+                else:
+                    self.tf_idf[filename][word] = 0
 
     def one_word_query(self, word):
         word = re.match(ur'\w+', word, flags=re.UNICODE).group()
@@ -58,8 +59,8 @@ class Indexer:
         else:
             return []
 
-    def free_text_query(self, words):
-        words = re.findall(ur'\b\w+\b', words, flags=re.UNICODE)
+    def free_text_query(self, text):
+        words = re.findall(ur'\b\w+\b', text, flags=re.UNICODE)
         result = []
         for word in words:
             result.extend(self.one_word_query(word))
