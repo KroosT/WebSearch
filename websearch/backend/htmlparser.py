@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import urlparse
 from crawler import Crawler
-import index
 import re
 
 
