@@ -35,9 +35,11 @@ class CheckRobotsPermission(urllib2.HTTPHandler):
 
 class Crawler():
 
-    def __init__(self, crawlername=DEFAULT_CRAWLER_NAME, new_headers={},
-                 email=DEFAULT_EMAIL):
+    def __init__(self, depth, width, crawlername=DEFAULT_CRAWLER_NAME,
+                 new_headers={}, email=DEFAULT_EMAIL):
 
+        self.depth = depth
+        self.width = width
         self.crawlername = crawlername
         self.email = email
         self.opener = urllib2.build_opener(CheckRobotsPermission(
@@ -50,4 +52,5 @@ class Crawler():
         self.opener.addheaders = opener_headers
 
     def open(self, url):
+        self.depth -= 1
         return self.opener.open(url)

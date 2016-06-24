@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEMPLATE_DIRS = (
+    '/home/kroos/djangoenv/bin/BSUIR_Python_Lab_003/websearch/templates',
+)
+
 
 # Application definition
 

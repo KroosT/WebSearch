@@ -2,23 +2,27 @@ from bs4 import BeautifulSoup
 import urlparse
 from crawler import Crawler
 import re
+from websearch.models import WebPage, Index
 
 
 class HtmlParser(object):
 
     def __init__(self, urls):
         self.urllist = urls
-        self.cr = Crawler()
+        self.cr = Crawler(2, 5)
         self.title = ""
         self.text = ""
+        self.word_pos = {}
 
     def geturllist(self, response, soup):
         base = response.geturl()
         for link in soup.find_all('a'):
-            parsed_link = urlparse.urldefrag(urlparse.urljoin(
-                base, link.get('href')))[0].encode('ascii', 'ignore')
-            if parsed_link not in self.urllist:
-                self.urllist.append(parsed_link)
+            for i in xrange(self.cr.width):
+                parsed_link = urlparse.urldefrag(urlparse.urljoin(
+                    base, link.get('href')))[0].encode('ascii', 'ignore')
+                if parsed_link not in self.urllist:
+                    self.urllist.append(parsed_link)
+                    i -= 1
 
     def gettext(self, soup):
         for s in soup.find_all(['style', 'script', '[document]', 'head',
@@ -35,7 +39,20 @@ class HtmlParser(object):
             try:
                 response = self.cr.open(url)
                 soup = BeautifulSoup(response, 'html.parser')
-                self.geturllist(response, soup)
+                self.gettitle(soup)
+                self.gettext(soup)
+                self.word_pos = self._words_positions(self.text)
+                if self.cr.depth != 0:
+                    self.geturllist(response, soup)
+                page = WebPage(url=url, title=self.title, text=self.text,
+                               indexed=False)
+                page.save()
+                for (word, list_pos) in self.word_pos:
+                    index = Index(word=word, frequency=len(list_pos),
+                                  page=page)
+                    index.save()
+                page.indexed = True
+                page.save()
                 print 'Success'
             except:
                 print 'Failed'
@@ -51,6 +68,7 @@ class HtmlParser(object):
                 word_pos[word] = [index]
         return word_pos
 
-# urls = ['http://www.tut.by']
-# h = HtmlParser(urls)
-# h.startcrawler()
+
+urls = ['http://www.tut.by']
+h = HtmlParser(urls)
+h.startcrawler()
