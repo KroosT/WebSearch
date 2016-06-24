@@ -11,7 +11,7 @@ class WebPage(models.Model):
     indexed = models.BooleanField()
 
 
-class Index(models.Model):
+class Indexing(models.Model):
 
     word = models.CharField(max_length=250)
     frequency = models.IntegerField()

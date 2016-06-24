@@ -2,14 +2,14 @@ from bs4 import BeautifulSoup
 import urlparse
 from crawler import Crawler
 import re
-from websearch.models import WebPage, Index
+from websearch.models import *
 
 
 class HtmlParser(object):
 
     def __init__(self, urls):
         self.urllist = urls
-        self.cr = Crawler(2, 5)
+        self.cr = Crawler(3, 3)
         self.title = ""
         self.text = ""
         self.word_pos = {}
@@ -35,8 +35,8 @@ class HtmlParser(object):
 
     def startcrawler(self):
         for url in self.urllist:
-            print 'Visiting {}'.format(url)
             try:
+                # print 'Visiting {}'.format(url)
                 response = self.cr.open(url)
                 soup = BeautifulSoup(response, 'html.parser')
                 self.gettitle(soup)
@@ -47,15 +47,17 @@ class HtmlParser(object):
                 page = WebPage(url=url, title=self.title, text=self.text,
                                indexed=False)
                 page.save()
-                for (word, list_pos) in self.word_pos:
-                    index = Index(word=word, frequency=len(list_pos),
-                                  page=page)
+                for (word, list_pos) in self.word_pos.iteritems():
+                    index = Indexing.objects.create(
+                        word=word, frequency=len(list_pos), webpage=page)
                     index.save()
+
                 page.indexed = True
                 page.save()
-                print 'Success'
-            except:
-                print 'Failed'
+                #print 'Success'
+            except Exception:
+                raise Exception
+
 
     @staticmethod
     def _words_positions(text):
@@ -67,8 +69,3 @@ class HtmlParser(object):
             else:
                 word_pos[word] = [index]
         return word_pos
-
-
-urls = ['http://www.tut.by']
-h = HtmlParser(urls)
-h.startcrawler()
