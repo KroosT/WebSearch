@@ -20,7 +20,7 @@ def handle_query(query):
         docs = {elem.webpage for elem
                 in Indexing.objects.filter(word__iexact=word)}
         docs_with_word[word] = len(docs)
-        results = results.intersection(docs)
+        results = results.union(docs)
     results = list(results)
     return sorted(results, key=lambda doc: score(doc, docs_with_word, N, avgdl))
 
