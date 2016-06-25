@@ -1,9 +1,9 @@
+from django.core.validators import URLValidator, ValidationError
 from django.shortcuts import render, render_to_response
+from backend.htmlparser import HtmlParser
 
 # Create your views here.
-from django.template.loader import get_template
-from django.template import Context
-from django.http.response import HttpResponse
+from django.template import RequestContext
 
 
 def home(request):
@@ -11,4 +11,29 @@ def home(request):
 
 
 def indexation(request):
-    return render_to_response('indexation.html')
+    if request.method == "POST":
+        indexing_urls = []
+        url_validator = URLValidator(schemes=['http', 'https'])
+        urls = request.POST.get('url')
+        if urls:
+            u_list = urls.split(", ")
+            for url in u_list:
+                try:
+                    url_validator(url)
+                except ValidationError:
+                    continue
+                indexing_urls.append(url)
+
+        if len(indexing_urls):
+            h = HtmlParser(indexing_urls)
+            h.create_workers()
+            h.multiproc()
+            text = 'Crawler successfully end working!'
+        else:
+            text = 'No valid URLs'
+
+    else:
+        text = ''
+
+    c = RequestContext(request)
+    return render_to_response('indexation.html', {'text': text}, c)
