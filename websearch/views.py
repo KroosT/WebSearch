@@ -26,14 +26,13 @@ def indexation(request):
 
         if len(indexing_urls):
             h = HtmlParser(indexing_urls)
-            h.create_workers()
             h.multiproc()
-            text = 'Crawler successfully end working!'
+            result = 'Crawler successfully end working!'
         else:
-            text = 'No valid URLs'
+            result = 'No valid URLs'
 
     else:
-        text = ''
+        result = ''
 
     c = RequestContext(request)
-    return render_to_response('indexation.html', {'text': text}, c)
+    return render_to_response('indexation.html', {'result': result}, c)

@@ -27,11 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-TEMPLATE_DIRS = (
-    '/home/kroos/djangoenv/bin/BSUIR_Python_Lab_003/websearch/templates',
-)
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -59,7 +54,7 @@ ROOT_URLCONF = 'BSUIR_Python_Lab_003.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/home/kroos/djangoenv/bin/BSUIR_Python_Lab_003/websearch/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
