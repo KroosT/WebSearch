@@ -40,12 +40,39 @@
                 <div class="col-lg-3"></div>
                 <form class="" role="search" action="/" method="post">
                     <div class="form-group; col-lg-5">
-                        <input name="query" type="text" class="form-control" placeholder="Search" value="{{ query }}">
+                        <input name="query" type="text" class="form-control" placeholder="Let's search" value="{{ query }}">
                     </div>
-                    <button type="submit" class="btn btn-success">Search</button>
+                    <button type="submit" class="btn btn-info">TopSearch</button>
                     {% csrf_token %}
                 </form>
             </div>
+        </div>
+        <div class="container">
+            {% for url in link %}
+                <div class="row">
+                    <div class="media-body">
+                        <h3 class="media-heading"><a href="{{ url.url }}" target="_blank">{{ url.title }}</a> </h3>
+                        {{ url.text|truncatewords:50 }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if link.has_previous %}
+                    <a href="?query={{ query }}&page={{ link.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                {% if link.has_previous or link.has_next %}
+                    <span class="current">
+                        Page {{ link.number }} of {{ link.paginator.num_pages }}.
+                    </span>
+                {% endif %}
+
+                {% if link.has_next %}
+                    <a href="?query={{ query }}&page={{ link.next_page_number }}">Next</a>
+                {% endif %}
+            </span>
         </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

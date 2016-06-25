@@ -18,7 +18,7 @@ class HtmlParser(object):
 
     def __init__(self, urls):
         self.urllist = set(urls)
-        self.cr = Crawler(2, 2)
+        self.cr = Crawler(3, 5)
         self.title = ""
         self.text = ""
         self.word_pos = {}

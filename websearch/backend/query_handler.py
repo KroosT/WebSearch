@@ -20,14 +20,14 @@ def handle_query(query):
         docs = {elem.webpage for elem
                 in Indexing.objects.filter(word__iexact=word)}
         docs_with_word[word] = len(docs)
-        results = results.intersection(docs)
+        results = results.union(docs)
     results = list(results)
     return sorted(results, key=lambda doc: score(doc, docs_with_word, N, avgdl))
 
 
 def score(doc, docs_with_word, N, avgdl):
     rank = 0
-    for (word, n_docs) in docs_with_word:
+    for (word, n_docs) in docs_with_word.iteritems():
         try:
             freq = Indexing.objects.filter(word__iexact=word).\
                 get(webpage=doc).frequency
