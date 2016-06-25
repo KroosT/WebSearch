@@ -30,13 +30,13 @@
                 <ul class="nav navbar-nav" >
                     <li></li>
                     <li><a href="/">Home</a> </li>
-                    <li><a href="indexation/">Indexation</a> </li>
-                    <li class="btn-info"><a href="urls/">URLs</a> </li>
+                    <li><a href="/indexation/">Indexation</a> </li>
+                    <li class="btn-info"><a href="">URLs</a> </li>
                 </ul>
             </nav>
         </div>
         <div class="container">
-            <form method="post" action="urls.html">
+            <form method="post" action="">
                 <div class="col-lg-2" style="margin-left: 450px;">
                     <input name="id" type="number" class="form-control" placeholder="ID to delete">
                 </div>
@@ -57,7 +57,7 @@
                                 <td style="width:100px;word-wrap: break-word;">{{ page.id }}</td>
                                 <td style="width:200px;word-wrap: break-word;">{{ page.url }}</td>
                                 <td style="width:100px;word-wrap: break-word;">{{ page.title }}</td>
-                                <td style="width:750px;word-wrap: break-word;">{{ page.text }}</td>
+                                <td style="width:750px;word-wrap: break-word;">{{ page.text|truncatewords:50 }}</td>
                             </tr>
                             {% endfor %}
                         </table>

@@ -1,22 +1,23 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.validators import URLValidator, ValidationError
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, render_to_response
 from backend.htmlparser import HtmlParser
 from models import *
+from django.template import RequestContext
+from websearch.backend import query_handler
+
 
 # Create your views here.
-from django.template import RequestContext
-from backend.query_handler import handle_query
-
-
 def home(request):
-    query = None
-    if request.method == 'POST':
+    if request.method == "POST":
         query = request.POST.get('query')
-    if not query:
-        return render_to_response('home.html')
-    links = handle_query(query)
-    paginator = Paginator(links, 15)
+    else:
+        query = request.GET.get('query')
+    if query is None:
+        query = ''
+        render_to_response('home.html', {'links': '', 'query': query})
+    links = query_handler.handle_query(query)
+    paginator = Paginator(links, 5)
 
     page = request.GET.get('page')
     try:
@@ -25,8 +26,7 @@ def home(request):
         link = paginator.page(1)
     except EmptyPage:
         link = paginator.page(paginator.num_pages)
-
-    return render(request, 'home.html', {'link':link, 'query':query})
+    return render_to_response('home.html', {'link': link, 'query': query})
 
 
 def indexation(request):
