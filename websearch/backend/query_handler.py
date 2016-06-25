@@ -9,13 +9,13 @@ def handle_query(query):
 
     summary_len = 0
     for index in Indexing.objects.all():
-        summary_len += index.count
+        summary_len += index.frequency
 
     avgdl = summary_len / float(N)
 
     results = set()
     docs_with_word = {}
-    words = set(re.findall(ur'\b\w+\w', query, flags=re.UNICODE))
+    words = set(re.findall(ur'\b\w+\b', query, flags=re.UNICODE))
     for word in words:
         docs = {elem.webpage for elem
                 in Indexing.objects.filter(word__iexact=word)}

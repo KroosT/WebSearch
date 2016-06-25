@@ -1,14 +1,32 @@
 from django.core.validators import URLValidator, ValidationError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, render_to_response
 from backend.htmlparser import HtmlParser
 from models import *
 
 # Create your views here.
 from django.template import RequestContext
+from backend.query_handler import handle_query
 
 
 def home(request):
-    return render_to_response('home.html')
+    query = None
+    if request.method == 'POST':
+        query = request.POST.get('query')
+    if not query:
+        return render_to_response('home.html')
+    links = handle_query(query)
+    paginator = Paginator(links, 15)
+
+    page = request.GET.get('page')
+    try:
+        link = paginator.page(page)
+    except PageNotAnInteger:
+        link = paginator.page(1)
+    except EmptyPage:
+        link = paginator.page(paginator.num_pages)
+
+    return render(request, 'home.html', {'link':link, 'query':query})
 
 
 def indexation(request):
