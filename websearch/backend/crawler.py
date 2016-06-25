@@ -2,8 +2,7 @@ import urllib2
 from robotparser import RobotFileParser
 from urlparse import urlunsplit, urlsplit
 from copy import copy
-import sys
-import socket
+
 
 DEFAULT_CRAWLER_NAME = 'ryzhik'
 DEFAULT_HEADERS = {
