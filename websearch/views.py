@@ -36,3 +36,7 @@ def indexation(request):
 
     c = RequestContext(request)
     return render_to_response('indexation.html', {'result': result}, c)
+
+
+def urls(request):
+    return render_to_response('urls.html')
