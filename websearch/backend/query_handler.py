@@ -27,7 +27,7 @@ def handle_query(query):
 
 def score(doc, docs_with_word, N, avgdl):
     rank = 0
-    for (word, n_docs) in docs_with_word:
+    for (word, n_docs) in docs_with_word.iteritems():
         try:
             freq = Indexing.objects.filter(word__iexact=word).\
                 get(webpage=doc).frequency
