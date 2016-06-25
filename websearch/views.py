@@ -1,6 +1,7 @@
 from django.core.validators import URLValidator, ValidationError
 from django.shortcuts import render, render_to_response
 from backend.htmlparser import HtmlParser
+from models import *
 
 # Create your views here.
 from django.template import RequestContext
@@ -39,4 +40,12 @@ def indexation(request):
 
 
 def urls(request):
-    return render_to_response('urls.html')
+    pages = WebPage.objects.all()
+    id_list = []
+    for page in pages:
+        id_list.append(page.id)
+    if not request.method == "POST" or request.POST.get('id') == '':
+        return render_to_response('urls.html', {'pages': pages})
+    if int(request.POST.get('id')) in id_list:
+        WebPage.objects.get(id=request.POST.get('id')).delete()
+    return render_to_response('urls.html', {'pages': pages})

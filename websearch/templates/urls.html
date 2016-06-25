@@ -36,16 +36,34 @@
             </nav>
         </div>
         <div class="container">
-            <div class="raw">
-                <div class="col-lg-3"></div>
-                <form class="" role="search" action="/?" method="post">
-                    <div class="form-group; col-lg-5">
-                        <input name="query" type="text" class="form-control" placeholder="Search" value="{{ query }}">
+            <form method="post" action="urls.html">
+                <div class="col-lg-2" style="margin-left: 450px;">
+                    <input name="id" type="number" class="form-control" placeholder="ID to delete">
+                </div>
+                <button type="submit" class="btn btn-info">
+                     Delete
+                </button>
+                <div class="row">
+                    <div class="panel panel-default filterable">
+                        <table class="table" style="width: 900px; table-layout: fixed">
+                            <tr>
+                                <th style="width: 100px;"><b><font color="#4b0082">ID</font></b></th>
+                                <th style="width: 200px;"><b><font color="#4b0082" style="margin-left: 40px">URL</font></b></th>
+                                <th style="width: 100px;"><b><font color="#4b0082">Title</font></b></th>
+                                <th style="width: 750px;"><b><font color="#4b0082" style="margin-left: 350px">Text</font></b></th>
+                            </tr>
+                            {% for page in pages %}
+                            <tr>
+                                <td style="width:100px;word-wrap: break-word;">{{ page.id }}</td>
+                                <td style="width:200px;word-wrap: break-word;">{{ page.url }}</td>
+                                <td style="width:100px;word-wrap: break-word;">{{ page.title }}</td>
+                                <td style="width:750px;word-wrap: break-word;">{{ page.text }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
                     </div>
-                    <button type="submit" class="btn btn-success">Search</button>
-                    {% csrf_token %}
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
