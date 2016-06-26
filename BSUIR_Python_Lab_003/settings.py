@@ -54,7 +54,7 @@ ROOT_URLCONF = 'BSUIR_Python_Lab_003.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/home/kroos/djangoenv/bin/BSUIR_Python_Lab_003/websearch/templates',],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
