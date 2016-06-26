@@ -15,7 +15,8 @@ def handle_query(query):
 
     results = set()
     docs_with_word = {}
-    words = set(re.findall(ur'\b\w+\b', query, flags=re.UNICODE))
+    words = set(re.findall(ur'\b\w+\b', unicode(query).lower(),
+                           flags=re.UNICODE))
     for word in words:
         docs = {elem.webpage for elem
                 in Indexing.objects.filter(word__iexact=word)}
