@@ -14,8 +14,7 @@ def home(request):
     else:
         query = request.GET.get('query')
     if query is None:
-        query = ''
-        render_to_response('home.html', {'links': '', 'query': query})
+        return render_to_response('home.html', {'links': '', 'query': ''})
     links = query_handler.handle_query(query)
     paginator = Paginator(links, 5)
 
