@@ -55,7 +55,7 @@
                             {% for page in pages %}
                             <tr>
                                 <td style="width:100px;word-wrap: break-word;">{{ page.id }}</td>
-                                <td style="width:200px;word-wrap: break-word;">{{ page.url }}</td>
+                                <td style="width:200px;word-wrap: break-word;"><a href={{ page.url }} target="_blank">{{ page.url }}</a></td>
                                 <td style="width:100px;word-wrap: break-word;">{{ page.title }}</td>
                                 <td style="width:750px;word-wrap: break-word;">{{ page.text|truncatewords:50 }}</td>
                             </tr>
