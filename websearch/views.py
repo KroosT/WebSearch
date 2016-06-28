@@ -16,7 +16,7 @@ def home(request):
     if query is None:
         return render_to_response('home.html', {'links': '', 'query': ''})
     links = query_handler.handle_query(query)
-    paginator = Paginator(links, 5)
+    paginator = Paginator(links, 10)
 
     page = request.GET.get('page')
     try:
@@ -66,3 +66,7 @@ def urls(request):
     if int(request.POST.get('id')) in id_list:
         WebPage.objects.get(id=request.POST.get('id')).delete()
     return render_to_response('urls.html', {'pages': pages})
+
+
+def settings(request):
+    return render_to_response('settings.html')

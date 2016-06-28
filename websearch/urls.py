@@ -5,4 +5,5 @@ urlpatterns = [
     url(r'^$', views.home),
     url(r'^indexation/?$', views.indexation),
     url(r'^urls/?$', views.urls),
+    url(r'^settings/?$', views.settings)
 ]
