@@ -36,6 +36,25 @@
                 </ul>
             </nav>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <form class="" method="post">
+                    <h3>Crawler settings:</h3>
+                    <div class="form-group; col-lg-2">
+                        <input name="depth" type="number" class="form-control" placeholder="Current depth: {{ curr_depth }}" value="{{ depth }}">
+                    </div>
+                    <div class="form-group; col-lg-2">
+                        <input name="width" type="number" class="form-control" placeholder="Current width: {{ curr_width }}" value="{{ width }}">
+                    </div>
+                    <button class="btn btn-info">Accept</button>
+                    {% csrf_token %}
+                </form>
+            </div>
+            <div class="container">
+                {{ result_of_saving }}
+            </div>
+        </div>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->

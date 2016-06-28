@@ -69,4 +69,20 @@ def urls(request):
 
 
 def settings(request):
-    return render_to_response('settings.html')
+
+    if request.method == 'POST':
+        depth = request.POST.get('depth')
+        width = request.POST.get('width')
+        HtmlParser.depth = depth;
+        HtmlParser.width = width;
+        result_of_saving = 'Saved!'
+    else:
+        result_of_saving = ''
+
+    curr_depth = HtmlParser.depth
+    curr_width = HtmlParser.width
+
+    return render_to_response('settings.html',
+                              {'result_of_saving': result_of_saving,
+                               'curr_depth': curr_depth,
+                               'curr_width': curr_width})

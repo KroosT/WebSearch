@@ -15,10 +15,11 @@ class HtmlParser(object):
 
     crawled_file = ''
     urls_file = ''
+    depth, width = 3, 5
 
     def __init__(self, urls):
         self.urllist = set(urls)
-        self.cr = Crawler(3, 5)
+        self.cr = Crawler(HtmlParser.depth, HtmlParser.width)
         self.title = ""
         self.text = ""
         self.word_pos = {}
