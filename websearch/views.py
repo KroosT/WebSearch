@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.validators import URLValidator, ValidationError
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render_to_response
 from backend.htmlparser import HtmlParser
 from models import *
 from django.template import RequestContext
@@ -70,13 +70,23 @@ def urls(request):
 
 def settings(request):
 
+    error = False
+    same_values = False
+    was_changed = False
     if request.method == 'POST':
         depth = request.POST.get('depth')
         width = request.POST.get('width')
-        HtmlParser.depth = depth;
-        HtmlParser.width = width;
+        if depth is None or width is None:
+            error = True
+        if depth == HtmlParser.depth and width == HtmlParser.width:
+            same_values = True
+        HtmlParser.depth = int(depth)
+        HtmlParser.width = int(width)
         result_of_saving = 'Saved!'
+        if not error or not same_values:
+            was_changed = True
     else:
+        was_changed = False
         result_of_saving = ''
 
     curr_depth = HtmlParser.depth
@@ -85,4 +95,7 @@ def settings(request):
     return render_to_response('settings.html',
                               {'result_of_saving': result_of_saving,
                                'curr_depth': curr_depth,
-                               'curr_width': curr_width})
+                               'curr_width': curr_width,
+                               'was_changed': was_changed,
+                               'error': error,
+                               'same_values': same_values})
