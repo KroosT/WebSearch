@@ -1,3 +1,3 @@
-# BSUIR-Python-Lab_003
+# WebSearch
 
-Simple web search engine.
+Simple websearch engine.
